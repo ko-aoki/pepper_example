@@ -35,7 +35,7 @@
         import urllib2, json
 
         timeout = int(self.getParameter("Timeout"))
-        url = "http://localhost:8080/pepper/api/example"
+        url = self.getParameter("Url")
         try:
             r = urllib2.urlopen(url, None, timeout)
             root = json.loads(r.read())
@@ -47,8 +47,8 @@
         except urllib2.URLError, message:
             self.logger.warn("Failed to open: %s, message=%s" % (url, message))
             self.onFailed(message)
-#        finally:
-#            r.close()]]>
+        finally:
+            r.close()]]>
 </content>
                             </script>
                             <Input name="onLoad" type="1" type_size="1" nature="0" inner="1" tooltip="Signal sent when diagram is loaded." id="1" />
@@ -56,6 +56,7 @@
                             <Output name="onStopped" type="1" type_size="1" nature="1" inner="0" tooltip="ボックス動作の終了時に信号を送る。" id="3" />
                             <Output name="onFailed" type="3" type_size="1" nature="2" inner="0" tooltip="" id="4" />
                             <Parameter name="Timeout" inherits_from_parent="0" content_type="1" value="30" default_value="30" min="0" max="3600" tooltip="" id="5" />
+                            <Parameter name="Url" inherits_from_parent="0" content_type="3" value="http://localhost:8080/pepper/api/example" default_value="" custom_choice="0" tooltip="" id="6" />
                         </Box>
                         <Link inputowner="2" indexofinput="2" outputowner="0" indexofoutput="2" />
                         <Link inputowner="0" indexofinput="4" outputowner="2" indexofoutput="3" />
