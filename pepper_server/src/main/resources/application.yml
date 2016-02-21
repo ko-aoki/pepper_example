@@ -1,0 +1,9 @@
+## YAML Template.
+spring:
+  datasource:
+    driverClassName: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://192.168.56.101:3306/devdb
+    username: devMaria
+    password: devMaria
+server:
+  context-path: /pepper

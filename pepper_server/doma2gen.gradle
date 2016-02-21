@@ -1,0 +1,36 @@
+configurations {
+    domaGenRuntime
+}
+
+repositories {
+    mavenCentral()
+    maven {url 'https://oss.sonatype.org/content/repositories/snapshots/'}
+}
+
+dependencies {
+    domaGenRuntime 'org.seasar.doma:doma-gen:2.7.0-SNAPSHOT'
+    domaGenRuntime 'mysql:mysql-connector-java:5.1.29'
+//    domaGenRuntime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+}
+
+task gen << {
+    ant.taskdef(resource: 'domagentask.properties',
+            classpath: configurations.domaGenRuntime.asPath)
+        ant.gen(url: 'jdbc:mysql://192.168.56.101:3306/devdb', user: 'devMaria', password: 'devMaria') {
+        entityConfig()
+        daoConfig()
+        sqlConfig()
+    }
+}
+
+task genTestCases << {
+    ant.taskdef(resource: 'domagentask.properties',
+            classpath: configurations.domaGenRuntime.asPath)
+    ant.gen(url: 'jdbc:mysql://192.168.56.101:3306/devdb', user: 'devMaria', password: 'devMaria') {
+        sqlTestCaseConfig {
+            fileset(dir: 'src/main/resources') {
+                include(name: 'META-INF/**/*.sql')
+            }
+        }
+    }
+}
